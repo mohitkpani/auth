@@ -15,29 +15,28 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-	
-	final AppUserService appUserService;
 
-	public AuthController(AppUserService appUserService) {
-		super();
-		this.appUserService = appUserService;
-	}
-	
-	@PostMapping("/register")
-	public ResponseEntity<String> register(@Valid @RequestBody RegisterRequestDTO registerRequestDTO){
-		 String response = appUserService.register(registerRequestDTO);
-		 
-		 if(response.equals("Username already exists."))
-			 return ResponseEntity
-					 .status(HttpStatus.CREATED)
-					 .body(response);
-		 
-		 else
-			 return ResponseEntity
-					 .status(HttpStatus.CONFLICT)
-					 .body(response);
-		 
-		 			
-	}
-	
+    private final AppUserService appUserService;
+
+    public AuthController(AppUserService appUserService) {
+        super();
+        this.appUserService = appUserService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(
+            @Valid @RequestBody RegisterRequestDTO registerRequestDTO) {
+
+        String response = appUserService.register(registerRequestDTO);
+
+        if (response.equals("User registered successfully.")) {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(response);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(response);
+    }
 }

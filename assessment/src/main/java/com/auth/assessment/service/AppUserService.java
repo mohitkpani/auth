@@ -9,36 +9,40 @@ import com.auth.assessment.repository.AppUserRepository;
 
 @Service
 public class AppUserService {
-	
-	 final AppUserRepository appUserRepository;
-	 final PasswordEncoder passwordEncoder;
-	
-	public AppUserService(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
-		super();
-		this.appUserRepository = appUserRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
 
+    private final AppUserRepository appUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    public AppUserService(AppUserRepository appUserRepository,
+                          PasswordEncoder passwordEncoder) {
+        super();
+        this.appUserRepository = appUserRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-	public String register(RegisterRequestDTO registerRequestDTO) {
-		
-		if(appUserRepository.existsByUsername(registerRequestDTO.username())) {
-			return "Username already exists.";
-		}
-		
-		if(appUserRepository.existsByEmail(registerRequestDTO.email())) {
-			return "Email already exists";
-		}
-		
-		AppUser appUser = new AppUser();
-		appUser.setUsername(registerRequestDTO.username());
-		appUser.setEmail(registerRequestDTO.email());
-		appUser.setPassword(passwordEncoder.encode(registerRequestDTO.password()));
-		appUser.setRole(registerRequestDTO.role());
-		
-		appUserRepository.save(appUser);
-		
-		return "User registered successfully.";
-	}
+    public String register(RegisterRequestDTO registerRequestDTO) {
+
+        if (appUserRepository.existsByUsername(
+                registerRequestDTO.username())) {
+
+            return "Username already exists.";
+        }
+
+        if (appUserRepository.existsByEmail(
+                registerRequestDTO.email())) {
+
+            return "Email already exists";
+        }
+
+        AppUser appUser = new AppUser();
+
+        appUser.setUsername(registerRequestDTO.username());
+        appUser.setEmail(registerRequestDTO.email());
+        appUser.setPassword(passwordEncoder.encode(registerRequestDTO.password()));
+        appUser.setRole(registerRequestDTO.role());
+
+        appUserRepository.save(appUser);
+
+        return "User registered successfully.";
+    }
 }
