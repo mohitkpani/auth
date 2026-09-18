@@ -10,11 +10,11 @@ import com.auth.assessment.entity.AppUser;
 import com.auth.assessment.repository.AppUserRepository;
 
 @Service
-public class CustomerUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
 
-    public CustomerUserDetailsService(AppUserRepository appUserRepository) {
+    public CustomUserDetailsService(AppUserRepository appUserRepository) {
         super();
         this.appUserRepository = appUserRepository;
     }
